@@ -1,0 +1,25 @@
+[project]
+name = "agents-for-all"
+version = "0.1.0"
+description = "Modular agent framework combining LLMs and Tools"
+requires-python = ">=3.11"
+dependencies = [
+    "openai>=1.77.0",
+    "requests>=2.32.3",
+    "sphinx>=8.2.3",
+    "furo>=2024.8.6",
+    "pytest>=8.3.5",
+    "pre-commit>=4.2.0",
+]
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Sailesh Dhungana", email = "dhunganasailesh@gmail.com" }
+]
+
+[project.urls]
+Homepage = "https://github.com/dhungana/agents-for-all.git"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

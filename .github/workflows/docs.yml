@@ -1,0 +1,28 @@
+name: Build Docs with Sphinx and uv
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install uv
+      run: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+    - name: Install Sphinx using uv
+      run: uv pip install -e . sphinx
+
+    - name: Build HTML docs
+      run: |
+        cd docs
+        make html
