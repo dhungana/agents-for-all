@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Model(ABC):
     """
     Abstract base class for models or model connectors to be exact.
@@ -18,9 +19,8 @@ class Model(ABC):
 
         Args:
             query (str): The query the LLM should respond to.
-        
+
         Returns:
             str: The response to the query from the LLM.
         """
         raise NotImplementedError
-

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict
 
+
 class Tool(ABC):
     """
     Abstract base class for tools that can be used by agents.
@@ -21,7 +22,6 @@ class Tool(ABC):
             str: Name of the tool.
         """
         raise NotImplementedError
-
 
     @property
     @abstractmethod

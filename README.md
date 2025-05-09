@@ -1,6 +1,12 @@
 # agents-for-all
 
-**Modular agent framework combining LLMs and tools.**  
+**Modular agent framework combining LLMs and tools.**
+
+[![Built with uv](https://img.shields.io/badge/built%20with-uv-blue?logo=rust)](https://github.com/astral-sh/uv)
+[![Build Status](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml/badge.svg)](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml)
+[![Test Coverage](https://img.shields.io/codecov/c/github/dhungana/agents-for-all?label=coverage)](https://codecov.io/gh/dhungana/agents-for-all)
+
+
 Designed to help developers quickly build task-solving agents using large language models and pluggable toolchains.
 
 ---

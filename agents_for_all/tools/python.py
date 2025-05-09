@@ -5,6 +5,7 @@ from typing import Dict
 
 from agents_for_all.tools.base_tool import Tool
 
+
 class Python(Tool):
     """
     A tool that can execute python codes.
@@ -18,6 +19,7 @@ class Python(Tool):
         Python
         """
         return "Python"
+
     @property
     def description(self) -> str:
         """
@@ -26,10 +28,10 @@ class Python(Tool):
         return (
             "A tool which can execute python commands commands on the host. "
             "It can generate values or produce side effects (e.g., creating files, etc). "
-            "Provide the command to execute as: {\"code\": \"<your python command>\"}"
-            "All the imports should be in the value for \"code\""
+            'Provide the command to execute as: {"code": "<your python command>"}'
+            'All the imports should be in the value for "code"'
             "Be careful of indentations and possible errors"
-            "The only thing this tool can handle is actual code. The LLM shouldn't output anything else." \
+            "The only thing this tool can handle is actual code. The LLM shouldn't output anything else."
             "This means no explanation. This means no code inside ```python```. Just pure python code to execute."
         )
 
@@ -59,4 +61,3 @@ class Python(Tool):
             sys.stdout = old_stdout
         output = buffer.getvalue()
         return output
-

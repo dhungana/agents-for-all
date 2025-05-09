@@ -1,14 +1,14 @@
-import logging
 import json
+import logging
 import re
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from agents_for_all.llms.base_model import Model
 from agents_for_all.tools.base_tool import Tool
 
 logging.basicConfig(level=logging.INFO)
 
-DEFAULT_SUBDIVISION_PROMPT = '''
+DEFAULT_SUBDIVISION_PROMPT = """
 You are a task-planning AI. Give a JSON array preferring tools over llm given the following user request:
 
 {action}
@@ -32,17 +32,16 @@ Respond only with a JSON array like:
 Do not respond with anything other than the JSON array. No need for explanation or anything.
 Do not explain the steps or say anything in the beginning. No need to tag the json with ```json.
 Just give the JSON array as told.
-'''
+"""
 
-ERROR_CORRECTION_PROMPT = '''
+ERROR_CORRECTION_PROMPT = """
 Last time, with these steps we got an error.
 
 Steps:
 {steps}
 
 {error}
-'''
-
+"""
 
 
 class Agent:
@@ -78,15 +77,23 @@ class Agent:
             return json.loads(llm_response)
         except json.JSONDecodeError:
             # Try to extract JSON if it was wrapped in text
-            match = re.search(r'\[.*\]', llm_response, re.DOTALL)
+            match = re.search(r"\[.*\]", llm_response, re.DOTALL)
             if match:
                 return json.loads(match.group())
             raise
 
-    def _subdivide_task(self, action: str, error: str = "", steps : Dict | None = None) -> List[Dict[str, Any]]:
-        tool_descriptions = "\n".join([f"- {tool.name}: {tool.description}" for tool in self.tools.values()])
-        prompt = DEFAULT_SUBDIVISION_PROMPT.format(action=action, tool_descriptions=tool_descriptions, error=error)
-        prompt += ERROR_CORRECTION_PROMPT.format(steps=steps, error=error) if error else ""
+    def _subdivide_task(
+        self, action: str, error: str = "", steps: Dict | None = None
+    ) -> List[Dict[str, Any]]:
+        tool_descriptions = "\n".join(
+            [f"- {tool.name}: {tool.description}" for tool in self.tools.values()]
+        )
+        prompt = DEFAULT_SUBDIVISION_PROMPT.format(
+            action=action, tool_descriptions=tool_descriptions, error=error
+        )
+        prompt += (
+            ERROR_CORRECTION_PROMPT.format(steps=steps, error=error) if error else ""
+        )
         response = self.llm.get_response(prompt)
         return self._force_json_response(response)
 
@@ -124,11 +131,15 @@ class Agent:
                             history.append(message)
                             continue
 
-                        logging.info(f"[Step {idx+1}] Tool: {name} | Input: {input_json}")
+                        logging.info(
+                            f"[Step {idx+1}] Tool: {name} | Input: {input_json}"
+                        )
                         result = tool.execute(input_json)
                         logging.info(f"[Tool:{name}] Result: {result}")
                         results.append(result)
-                        history.append(f"Tool `{name}` executed with input {input_json} produced: {result}")
+                        history.append(
+                            f"Tool `{name}` executed with input {input_json} produced: {result}"
+                        )
 
                     elif step_type == "llm":
                         llm_query = step.get("query")
