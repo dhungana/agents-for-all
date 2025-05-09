@@ -20,7 +20,7 @@ jobs:
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
     - name: Install dependencies with uv
-      run: uv pip install -e . pytest
+      run: uv sync
 
     - name: Run Pytest
-      run: pytest tests
+      run: uv run pytest tests

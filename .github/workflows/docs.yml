@@ -1,14 +1,14 @@
-name: Build Docs with Sphinx and uv
+name: Build and Deploy Docs
 
 on:
   push:
-    branches: [main]
-  pull_request:
     branches: [main]
 
 jobs:
   docs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required to push to gh-pages
 
     steps:
     - name: Checkout code
@@ -19,10 +19,16 @@ jobs:
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-    - name: Install Sphinx using uv
-      run: uv pip install -e . sphinx
+    - name: Install Sphinx and deps
+      run: uv sync
 
     - name: Build HTML docs
-      run: |
-        cd docs
-        make html
+      run: uv run sphinx-build docs docs/_build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: docs/_build
+        publish_branch: gh-pages
+        force_orphan: true
