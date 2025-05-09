@@ -25,3 +25,5 @@ pygments_dark_style = 'monokai'
 html_static_path = ['_static']
 autoclass_content = 'both'
 add_module_names = False
+
+graphviz_dot = "dot"

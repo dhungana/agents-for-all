@@ -8,6 +8,7 @@ dependencies = [
     "requests>=2.32.3",
     "sphinx>=8.2.3",
     "furo>=2024.8.6",
+    "graphviz>=0.20.3",
     "pytest>=8.3.5",
     "pre-commit>=4.2.0",
 ]
