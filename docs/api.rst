@@ -19,6 +19,21 @@ This section documents the main components of the `agents-for-all` framework.
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: agents_for_all.llms.openai
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: agents_for_all.llms.anthropic
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: agents_for_all.llms.gemini
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 .. automodule:: agents_for_all.tools.base_tool
    :members:
    :undoc-members:
