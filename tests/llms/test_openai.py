@@ -1,4 +1,4 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from agents_for_all.llms.openai import OpenAIModel
 

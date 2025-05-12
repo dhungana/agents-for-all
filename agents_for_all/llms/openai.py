@@ -3,6 +3,7 @@ import re
 from typing import Dict
 
 import openai
+
 from agents_for_all.llms.base_model import Model
 
 
@@ -11,7 +12,9 @@ class OpenAIModel(Model):
     OpenAI model connector using the official OpenAI SDK.
     """
 
-    def __init__(self, model: str, api_key: str, parameters: Dict | None = None) -> None:
+    def __init__(
+        self, model: str, api_key: str, parameters: Dict | None = None
+    ) -> None:
         """
         Initialize the OpenAI model.
 
@@ -38,7 +41,7 @@ class OpenAIModel(Model):
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": query}],
-                **self.parameters
+                **self.parameters,
             )
             content = response.choices[0].message.content
             return re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL)

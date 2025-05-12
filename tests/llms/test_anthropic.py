@@ -1,5 +1,6 @@
+from unittest.mock import patch
+
 from agents_for_all.llms.anthropic import AnthropicModel
-from unittest.mock import patch, MagicMock
 
 
 def test_anthropic_model_get_response_strips_think_tag():
@@ -13,9 +14,7 @@ def test_anthropic_model_get_response_strips_think_tag():
         mock_messages.create.return_value = MockResponse()
 
         model = AnthropicModel(
-            api_key="fake",
-            model="claude-test",
-            parameters={"max_tokens": 100}
+            api_key="fake", model="claude-test", parameters={"max_tokens": 100}
         )
 
         result = model.get_response("What's up?")

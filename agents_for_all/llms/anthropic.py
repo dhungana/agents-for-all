@@ -3,6 +3,7 @@ import re
 from typing import Dict
 
 from anthropic import Anthropic
+
 from agents_for_all.llms.base_model import Model
 
 
@@ -11,7 +12,9 @@ class AnthropicModel(Model):
     Anthropic Claude model connector using the official SDK.
     """
 
-    def __init__(self, model: str, api_key: str, parameters: Dict | None = None) -> None:
+    def __init__(
+        self, model: str, api_key: str, parameters: Dict | None = None
+    ) -> None:
         """
         Initialize the Anthropic model.
 
@@ -39,9 +42,13 @@ class AnthropicModel(Model):
             response = self.client.messages.create(
                 model=self.model,
                 messages=[{"role": "user", "content": query}],
-                **self.parameters
+                **self.parameters,
             )
-            content = response.content[0].text if hasattr(response, "content") else str(response)
+            content = (
+                response.content[0].text
+                if hasattr(response, "content")
+                else str(response)
+            )
             return re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL)
         except Exception as e:
             logging.error(e)

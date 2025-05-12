@@ -1,6 +1,7 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from agents_for_all.llms.gemini import GeminiModel
+
 
 def test_gemini_model_get_response_strips_think_tag():
     mock_response = MagicMock()

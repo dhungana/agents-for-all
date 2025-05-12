@@ -3,6 +3,7 @@ import re
 from typing import Dict
 
 import google.generativeai as genai
+
 from agents_for_all.llms.base_model import Model
 
 
@@ -11,7 +12,9 @@ class GeminiModel(Model):
     Google Gemini model connector using the official Google Generative AI SDK.
     """
 
-    def __init__(self, model: str, api_key: str, parameters: Dict | None = None) -> None:
+    def __init__(
+        self, model: str, api_key: str, parameters: Dict | None = None
+    ) -> None:
         """
         Initialize the Gemini model.
 
@@ -35,7 +38,9 @@ class GeminiModel(Model):
             str: The model's response content.
         """
         try:
-            response = self.model.generate_content(query, generation_config=self.parameters)
+            response = self.model.generate_content(
+                query, generation_config=self.parameters
+            )
             content = response.text if hasattr(response, "text") else str(response)
             return re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL)
         except Exception as e:
