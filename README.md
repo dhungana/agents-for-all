@@ -16,7 +16,7 @@ Designed to help developers quickly build task-solving agents using large langua
 ## ✨ Features
 
 - 🔌 Pluggable tool architecture
-- 🤖 LLM integration (OpenAI, etc.)
+- 🤖 LLM integration (OpenAI, Anthropic, Gemini, Direct, etc.)
 - 🧪 Built-in testing with `pytest`
 - 📝 Documentation support via `sphinx`
 - ⚡ Fast dependency management using [`uv`](https://github.com/astral-sh/uv)
