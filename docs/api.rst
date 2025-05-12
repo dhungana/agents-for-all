@@ -44,3 +44,45 @@ This section documents the main components of the `agents-for-all` framework.
    :undoc-members:
    :show-inheritance:
    :special-members: name, description
+
+.. automodule:: agents_for_all.tools.shell
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: name, description
+
+.. automodule:: agents_for_all.tools.file
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: name, description
+
+.. automodule:: agents_for_all.tools.math
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: name, description
+
+.. automodule:: agents_for_all.tools.web_fetcher
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: name, description
+
+.. automodule:: agents_for_all.tools.web_search
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: name, description
+
+.. automodule:: agents_for_all.tools.email
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: name, description
+
+.. automodule:: agents_for_all.tools.data_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: name, description

@@ -23,7 +23,13 @@ Class Hierarchies:
    agents_for_all.llms.anthropic.AnthropicModel
    agents_for_all.llms.gemini.GeminiModel
    agents_for_all.tools.base_tool.Tool
+   agents_for_all.tools.email.Email
+   agents_for_all.tools.file.File
+   agents_for_all.tools.math.Math
    agents_for_all.tools.python.Python
+   agents_for_all.tools.shell.Shell
+   agents_for_all.tools.web_fetcher.WebFetcher
+   agents_for_all.tools.web_search.WebSearch
 
 Indices and tables
 ==================
