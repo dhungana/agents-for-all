@@ -1,6 +1,6 @@
 [project]
 name = "agents-for-all"
-version = "0.1.2"
+version = "0.1.3"
 description = "Modular agent framework combining LLMs and Tools"
 requires-python = ">=3.10"
 dependencies = [
