@@ -6,10 +6,10 @@ class Model(ABC):
     Abstract base class for models or model connectors to be exact.
     The models are initalized using its subclasses and can be used in agents.
     Some models are:
-    - Direct (with api_endpoint, query_parameter_name, and other_parameters)
-    - OpenAI
-    - Antropic
-    - Gemini
+    - DirectModel (with api_endpoint, query_parameter_name, and other_parameters)
+    - OpenAIModel
+    - AntropicModel
+    - GeminiModel
     """
 
     @abstractmethod

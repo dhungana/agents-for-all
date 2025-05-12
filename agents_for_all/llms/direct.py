@@ -7,7 +7,7 @@ import requests
 from agents_for_all.llms.base_model import Model
 
 
-class Direct(Model):
+class DirectModel(Model):
     """
     Direct model (or model connector to be exact) which connects to an LLM
     by using api_endpoint and parameters using OpenAI format (as done by LLMStudio).

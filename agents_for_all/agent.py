@@ -54,6 +54,7 @@ class AgentResult:
         output (str): The final summary response after executing all steps.
         history (List[str]): Step-by-step log of what happened during execution.
     """
+
     output: str
     history: List[str]
 
@@ -67,10 +68,10 @@ class Agent:
     .. code-block:: python
 
         from agents_for_all import Agent
-        from agents_for_all.llms.direct import Direct
+        from agents_for_all.llms.direct import DirectModel
         from agents_for_all.tools.python import Python
 
-        llm = Direct(
+        llm = DirectModel(
             api_endpoint="http://127.0.0.1:1234/v1/chat/completions",
             model="deepseek-r1-distill-llama-8b"
         )

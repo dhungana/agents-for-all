@@ -4,6 +4,8 @@ version = "0.1.2"
 description = "Modular agent framework combining LLMs and Tools"
 requires-python = ">=3.10"
 dependencies = [
+    "anthropic>=0.51.0",
+    "google-generativeai>=0.8.5",
     "openai>=1.77.0",
     "requests>=2.32.3",
 ]

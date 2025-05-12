@@ -30,4 +30,4 @@ def test_agent_runs_tool():
     python_tool = Python()
     agent = Agent(llm=llm, tools=[python_tool])
     result = agent.do("Add 1 and 1")
-    assert "2" in result
+    assert "2" == result.output
