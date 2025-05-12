@@ -55,3 +55,4 @@ class Direct(Model):
 
         except Exception as e:
             logging.error(e)
+            raise e

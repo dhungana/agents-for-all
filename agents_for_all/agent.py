@@ -1,12 +1,13 @@
 import json
 import logging
 import re
+from dataclasses import dataclass
 from typing import Any, Dict, List
 
 from agents_for_all.llms.base_model import Model
 from agents_for_all.tools.base_tool import Tool
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARNING)
 
 DEFAULT_SUBDIVISION_PROMPT = """
 You are a task-planning AI. Give a JSON array preferring tools over llm given the following user request:
@@ -44,6 +45,19 @@ Steps:
 """
 
 
+@dataclass
+class AgentResult:
+    """
+    Represents the result of running an Agent's `.do()` method.
+
+    Attributes:
+        output (str): The final summary response after executing all steps.
+        history (List[str]): Step-by-step log of what happened during execution.
+    """
+    output: str
+    history: List[str]
+
+
 class Agent:
     """
     Agent class which can 'do' actions using llm and tools.
@@ -63,7 +77,9 @@ class Agent:
         python = Python()
 
         agent = Agent(llm=llm, tools=[python])
-        print(agent.do("Create a file with system date as the filename and txt as extension."))
+        result = agent.do("Create a file with system date as the filename and txt as extension.")
+        print(result.output) # Final output
+        print(result.history) # History of steps taken
 
     """
 
@@ -193,7 +209,7 @@ Now, Give the final answer in brief based on the action desired without going in
 """
                 final_result = self.llm.get_response(summary_prompt.strip())
                 logging.info(f"[Final Summary] {final_result}")
-                return final_result
+                return AgentResult(output=final_result, history=history)
             except Exception as e:
                 attempt += 1
                 error = e

@@ -37,8 +37,8 @@ from agents_for_all.tools.python import Python
 llm = Direct(api_endpoint="http://localhost:1234/v1/chat/completions", model="your-model-name")
 agent = Agent(llm=llm, tools=[Python()])
 result = agent.do("Generate a Fibonacci sequence of length 10.")
-
-print(result)
+print(result.output) # Final output
+print(result.history) # History of steps taken
 ```
 
 ## 🚀 Getting Started
