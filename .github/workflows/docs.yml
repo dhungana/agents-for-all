@@ -23,7 +23,7 @@ jobs:
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
     - name: Install Sphinx and deps
-      run: uv sync
+      run: uv sync --extra dev
 
     - name: Build HTML docs
       run: uv run sphinx-build docs docs/_build
