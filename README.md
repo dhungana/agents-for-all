@@ -44,7 +44,15 @@ print(result.output) # Final output
 print(result.history) # History of steps taken
 ```
 
-## 🚀 Getting Started
+---
+
+## 🤝 Contributing
+
+1. Fork this repository
+2. Create your feature branch (`git checkout -b feature/YourFeature`)
+3. Commit your changes (`git commit -am 'Add YourFeature'`)
+4. Push to the branch (`git push origin feature/YourFeature`)
+5. Create a new Pull Request
 
 ### Prerequisites
 
@@ -62,15 +70,11 @@ Create a virtual environment and install dependencies:
 uv sync
 ```
 
----
-
 ## 🧪 Running Tests
 
 ```bash
 uv run pytest
 ```
-
----
 
 ## 📚 Documentation
 
@@ -79,8 +83,6 @@ To build the Sphinx docs (if configured):
 ```bash
 uv run sphinx-build docs docs/_build
 ```
-
----
 
 ## 🛠 Project Structure (Sample)
 
@@ -94,16 +96,6 @@ agents_for_all/
 ├── pyproject.toml
 └── .gitignore
 ```
-
----
-
-## 🤝 Contributing
-
-1. Fork this repository
-2. Create your feature branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -am 'Add YourFeature'`)
-4. Push to the branch (`git push origin feature/YourFeature`)
-5. Create a new Pull Request
 
 ---
 
