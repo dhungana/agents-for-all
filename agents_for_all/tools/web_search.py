@@ -1,5 +1,7 @@
-import requests
 from typing import Dict, Literal
+
+import requests
+
 from agents_for_all.tools.base_tool import Tool
 
 
@@ -46,7 +48,7 @@ class WebSearch(Tool):
         """
         return (
             "Searches the web using either Google or Bing API. "
-            "Requires provider and API key during init. Input: {\"query\": \"...\"}."
+            'Requires provider and API key during init. Input: {"query": "..."}.'
         )
 
     def execute(self, input_json: Dict) -> str:
@@ -74,7 +76,10 @@ class WebSearch(Tool):
         res = requests.get(url, params=params)
         data = res.json()
         items = data.get("items", [])
-        return "\n".join([f"{item['title']}: {item['link']}" for item in items[:3]]) or "No results found."
+        return (
+            "\n".join([f"{item['title']}: {item['link']}" for item in items[:3]])
+            or "No results found."
+        )
 
     def _bing_search(self, query: str) -> str:
         url = "https://api.bing.microsoft.com/v7.0/search"
@@ -83,4 +88,7 @@ class WebSearch(Tool):
         res = requests.get(url, headers=headers, params=params)
         data = res.json()
         web_pages = data.get("webPages", {}).get("value", [])
-        return "\n".join([f"{item['name']}: {item['url']}" for item in web_pages[:3]]) or "No results found."
+        return (
+            "\n".join([f"{item['name']}: {item['url']}" for item in web_pages[:3]])
+            or "No results found."
+        )

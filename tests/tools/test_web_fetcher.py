@@ -1,5 +1,7 @@
-from agents_for_all.tools.web_fetcher import WebFetcher
 from unittest.mock import patch
+
+from agents_for_all.tools.web_fetcher import WebFetcher
+
 
 def test_web_fetcher_mocks_http():
     with patch("requests.get") as mock_get:

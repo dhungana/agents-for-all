@@ -1,5 +1,7 @@
-from agents_for_all.tools.web_search import WebSearch
 from unittest.mock import patch
+
+from agents_for_all.tools.web_search import WebSearch
+
 
 def test_google_search_mock():
     with patch("requests.get") as mock_get:
@@ -9,6 +11,7 @@ def test_google_search_mock():
         tool = WebSearch("google", api_key="dummy", cx="cx")
         result = tool.execute({"query": "test"})
         assert "http://example.com" in result
+
 
 def test_bing_search_mock():
     with patch("requests.get") as mock_get:

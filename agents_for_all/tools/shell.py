@@ -1,5 +1,6 @@
 import subprocess
 from typing import Dict
+
 from agents_for_all.tools.base_tool import Tool
 
 
@@ -30,7 +31,7 @@ class Shell(Tool):
         {"command": "<your shell command>"}
         """
         return (
-            "Executes shell commands. Input: {\"command\": \"<your shell command>\"}. "
+            'Executes shell commands. Input: {"command": "<your shell command>"}. '
             "Only stdout is returned. Errors are suppressed or printed as text."
         )
 

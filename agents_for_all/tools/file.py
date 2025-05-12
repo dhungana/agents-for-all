@@ -1,4 +1,5 @@
 from typing import Dict
+
 from agents_for_all.tools.base_tool import Tool
 
 
@@ -35,7 +36,7 @@ class File(Tool):
         """
         return (
             "Performs file operations. Input: "
-            "{\"operation\": \"read\"|\"write\", \"path\": \"filename\", \"content\": \"...\"}."
+            '{"operation": "read"|"write", "path": "filename", "content": "..."}.'
             " For 'write', 'content' must be provided."
         )
 

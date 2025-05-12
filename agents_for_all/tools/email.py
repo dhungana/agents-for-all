@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.text import MIMEText
 from typing import Dict
+
 from agents_for_all.tools.base_tool import Tool
 
 
@@ -57,7 +58,7 @@ class Email(Tool):
         """
         return (
             "Sends an email to a recipient. "
-            "Input must include: {\"to\": \"...\", \"subject\": \"...\", \"body\": \"...\"}. "
+            'Input must include: {"to": "...", "subject": "...", "body": "..."}. '
             "Requires SMTP credentials during initialization."
         )
 

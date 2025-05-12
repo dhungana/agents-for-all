@@ -1,5 +1,7 @@
 from typing import Dict
+
 import sympy
+
 from agents_for_all.tools.base_tool import Tool
 
 
@@ -34,7 +36,7 @@ class Math(Tool):
         Variables are substituted automatically.
         """
         return (
-            "Evaluates math expressions using sympy. Input: {\"expr\": \"2*x + 1\", \"x\": 5}. "
+            'Evaluates math expressions using sympy. Input: {"expr": "2*x + 1", "x": 5}. '
             "Returns numeric result using variable substitution."
         )
 

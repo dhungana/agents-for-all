@@ -1,6 +1,8 @@
-import pandas as pd
 import io
 from typing import Dict
+
+import pandas as pd
+
 from agents_for_all.tools.base_tool import Tool
 
 
@@ -40,7 +42,7 @@ class DataAnalysis(Tool):
         """
         return (
             "Evaluates pandas code on a CSV-derived DataFrame. "
-            "Input: {\"csv\": \"a,b\\n1,2\\n3,4\", \"code\": \"df['a'].sum()\"}. "
+            'Input: {"csv": "a,b\\n1,2\\n3,4", "code": "df[\'a\'].sum()"}. '
             "The code must reference the variable `df`."
         )
 
