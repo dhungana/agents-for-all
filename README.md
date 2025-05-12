@@ -114,3 +114,5 @@ Apache License 2.0
 
 - 📦 GitHub: [agents-for-all](https://github.com/dhungana/agents-for-all.git)
 - ✉️ Maintainer: [Sailesh Dhungana](mailto:dhunganasailesh@gmail.com)
+- 📘 Docs: [dhungana.github.io/agents-for-all](https://dhungana.github.io/agents-for-all/)
+- 📦 PyPI: [agents-for-all](https://pypi.org/project/agents-for-all/)
