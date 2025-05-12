@@ -16,11 +16,12 @@ Class Hierarchies:
 
 .. inheritance-diagram::
    agents_for_all.agent.Agent
+   agents_for_all.agent.AgentResult
    agents_for_all.llms.base_model.Model
    agents_for_all.llms.direct.DirectModel
-   agents_for_all.llms.direct.OpenAIModel
-   agents_for_all.llms.direct.AnthropicModel
-   agents_for_all.llms.direct.GeminiModel
+   agents_for_all.llms.openai.OpenAIModel
+   agents_for_all.llms.anthorpic.AnthropicModel
+   agents_for_all.llms.gemini.GeminiModel
    agents_for_all.tools.base_tool.Tool
    agents_for_all.tools.python.Python
 
