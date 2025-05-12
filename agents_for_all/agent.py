@@ -172,7 +172,7 @@ Use values from history when possible.
                         logging.error(msg)
                         results.append(msg)
                         history.append(msg)
-
+                history_str = "\n".join(history)
                 summary_prompt = f"""
 Give the answer without giving the full history. Just answer based on the action in brief.
 Give the desired answer only or tell whether the desired outcome happened or not.
@@ -187,7 +187,7 @@ We subdivided the action based to these steps:
 
 Here is what has happened so far in the execution:
 
-{"\n".join(history)}
+{history_str}
 
 Now, Give the final answer in brief based on the action desired without going into detail of the history.
 """
