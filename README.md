@@ -4,11 +4,10 @@
 
 [![Built with uv](https://img.shields.io/badge/built%20with-uv-blue?logo=rust)](https://github.com/astral-sh/uv)
 [![Test Coverage](https://img.shields.io/codecov/c/github/dhungana/agents-for-all?label=coverage)](https://codecov.io/gh/dhungana/agents-for-all)
-[![Python 3.10](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml/badge.svg?branch=main&label=3.10)](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml)
-[![Python 3.11](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml/badge.svg?branch=main&label=3.11)](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml)
-[![Python 3.12](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml/badge.svg?branch=main&label=3.12)](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml)
-[![Python 3.13](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml/badge.svg?branch=main&label=3.13)](https://github.com/dhungana/agents-for-all/actions/workflows/test.yml)
-
+[![Python 3.10](https://github.com/dhungana/agents-for-all/actions/workflows/test_310.yml/badge.svg)](https://github.com/dhungana/agents-for-all/actions/workflows/test_310.yml)
+[![Python 3.11](https://github.com/dhungana/agents-for-all/actions/workflows/test_311.yml/badge.svg)](https://github.com/dhungana/agents-for-all/actions/workflows/test_311.yml)
+[![Python 3.12](https://github.com/dhungana/agents-for-all/actions/workflows/test_312.yml/badge.svg)](https://github.com/dhungana/agents-for-all/actions/workflows/test_312.yml)
+[![Python 3.13](https://github.com/dhungana/agents-for-all/actions/workflows/test_313.yml/badge.svg)](https://github.com/dhungana/agents-for-all/actions/workflows/test_313.yml)
 
 Designed to help developers quickly build task-solving agents using large language models and pluggable toolchains.
 

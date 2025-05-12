@@ -1,4 +1,4 @@
-name: Test with pytest across Python versions
+name: Python 3.10
 
 on:
   push:
@@ -8,37 +8,31 @@ on:
 
 jobs:
   test:
-    name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.10, 3.11, 3.12, 3.13]
-      fail-fast: false
-
+    name: Python 3.10
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.10
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.10
 
     - name: Install uv
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-    - name: Install dependencies with uv
+    - name: Install dependencies
       run: uv sync --extra dev
 
-    - name: Run pre-commit checks
+    - name: Run pre-commit
       run: uv run pre-commit run --all
 
-    - name: Run pytest with coverage
+    - name: Run pytest
       run: uv run pytest --cov=agents_for_all --cov-report=xml
 
-    - name: Upload coverage to Codecov
+    - name: Upload to Codecov
       uses: codecov/codecov-action@v3
       with:
         files: ./coverage.xml

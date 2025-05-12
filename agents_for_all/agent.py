@@ -143,6 +143,7 @@ class Agent:
 
                     elif step_type == "llm":
                         llm_query = step.get("query")
+                        history_str = "\n".join(history)
                         full_prompt = f"""
 Give the answer for the {llm_query} based on the following.
 
@@ -156,7 +157,7 @@ We subdivided the action based to these steps:
 
 Here is what has happened so far in the execution:
 
-{"\n".join(history)}
+{history_str}
 
 Use values from history when possible.
 """

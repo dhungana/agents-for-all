@@ -67,3 +67,6 @@ Thumbs.db
 3.11/
 3.12/
 3.13/
+
+# uv lock
+uv.lock
