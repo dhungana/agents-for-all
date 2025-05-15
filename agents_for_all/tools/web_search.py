@@ -42,9 +42,6 @@ class WebSearch(Tool):
     def description(self) -> str:
         """
         Performs web search using Google or Bing.
-
-        Input format:
-        {"query": "What is the capital of Nepal?"}
         """
         return (
             "Searches the web using either Google or Bing API. "

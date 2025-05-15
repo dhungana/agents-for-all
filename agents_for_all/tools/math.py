@@ -26,13 +26,6 @@ class Math(Tool):
     def description(self) -> str:
         """
         Evaluates symbolic math expressions using sympy.
-
-        Input format:
-        {
-            "expr": "2*x + 1",
-            "x": 5
-        }
-
         Variables are substituted automatically.
         """
         return (

@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.abspath(".."))
 
 project = "agents-for-all"
 author = "Sailesh Dhungana"
-release = "0.1.0"
+release = "0.1.5"
 
 extensions = [
     "sphinx.ext.autodoc",

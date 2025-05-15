@@ -26,13 +26,6 @@ class File(Tool):
     def description(self) -> str:
         """
         Reads from or writes to files.
-
-        Input:
-            {
-                "operation": "read" or "write",
-                "path": "filename",
-                "content": "..."  (optional, required for write)
-            }
         """
         return (
             "Performs file operations. Input: "

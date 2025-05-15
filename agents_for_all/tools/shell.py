@@ -29,7 +29,6 @@ class Shell(Tool):
     def description(self) -> str:
         """
         Executes shell commands on the host system. Input format:
-        {"command": "<your shell command>"}
         """
         return (
             """

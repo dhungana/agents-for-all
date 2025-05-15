@@ -26,9 +26,6 @@ class WebFetcher(Tool):
     def description(self) -> str:
         """
         Fetches a webpage using HTTP GET.
-
-        Input format:
-        {"url": "<https-url>"}
         """
         return """
             "Fetches the HTML/text content of a given URL. "

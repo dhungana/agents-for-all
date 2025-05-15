@@ -48,13 +48,6 @@ class Email(Tool):
     def description(self) -> str:
         """
         Sends an email using SMTP.
-
-        Input format:
-        {
-            "to": "recipient@example.com",
-            "subject": "Subject line",
-            "body": "Email content"
-        }
         """
         return (
             "Sends an email to a recipient. "

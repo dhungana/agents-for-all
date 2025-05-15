@@ -31,13 +31,6 @@ class DataAnalysis(Tool):
     def description(self) -> str:
         """
         Executes pandas code on a DataFrame loaded from CSV.
-
-        Input format:
-            {
-                "csv": "<csv string>",
-                "code": "<expression using df>"
-            }
-
         The variable `df` is automatically defined as the parsed DataFrame.
         """
         return (
