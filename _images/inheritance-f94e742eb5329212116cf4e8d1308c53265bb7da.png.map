@@ -1,0 +1,18 @@
+<map id="inheritance7fb29e086f" name="inheritance7fb29e086f">
+<area shape="rect" id="node1" title="Helper class that provides a standard way to create an ABC using" alt="" coords="71,186,133,207"/>
+<area shape="rect" id="node5" href="api.html#agents_for_all.llms.base_model.Model" target="_top" title="Abstract base class for models or model connectors to be exact." alt="" coords="240,85,464,106"/>
+<area shape="rect" id="node9" href="api.html#agents_for_all.tools.base_tool.Tool" target="_top" title="Abstract base class for tools that can be used by agents." alt="" coords="251,267,453,288"/>
+<area shape="rect" id="node2" href="api.html#agents_for_all.agent.Agent" target="_top" title="Agent class which can &#39;do&#39; actions using llm and tools." alt="" coords="21,146,183,166"/>
+<area shape="rect" id="node3" href="api.html#agents_for_all.agent.AgentResult" target="_top" title="Represents the result of running an Agent&#39;s `.do()` method." alt="" coords="4,105,200,126"/>
+<area shape="rect" id="node4" href="api.html#agents_for_all.llms.anthropic.AnthropicModel" target="_top" title="Anthropic Claude model connector using the official SDK." alt="" coords="503,4,764,25"/>
+<area shape="rect" id="node6" href="api.html#agents_for_all.llms.direct.DirectModel" target="_top" title="Direct model (or model connector to be exact) which connects to an LLM" alt="" coords="522,45,744,66"/>
+<area shape="rect" id="node7" href="api.html#agents_for_all.llms.gemini.GeminiModel" target="_top" title="Google Gemini model connector using the official Google Generative AI SDK." alt="" coords="516,85,751,106"/>
+<area shape="rect" id="node8" href="api.html#agents_for_all.llms.openai.OpenAIModel" target="_top" title="OpenAI model connector using the official OpenAI SDK." alt="" coords="516,126,750,147"/>
+<area shape="rect" id="node10" href="api.html#agents_for_all.tools.email.Email" target="_top" title="A tool that sends emails via SMTP." alt="" coords="538,166,729,187"/>
+<area shape="rect" id="node11" href="api.html#agents_for_all.tools.file.File" target="_top" title="A tool that can perform basic file operations: read and write." alt="" coords="551,207,716,228"/>
+<area shape="rect" id="node12" href="api.html#agents_for_all.tools.math.Math" target="_top" title="A tool to evaluate mathematical expressions safely using sympy." alt="" coords="541,247,726,268"/>
+<area shape="rect" id="node13" href="api.html#agents_for_all.tools.python.Python" target="_top" title="A tool that can execute python codes." alt="" coords="532,288,735,309"/>
+<area shape="rect" id="node14" href="api.html#agents_for_all.tools.shell.Shell" target="_top" title="A tool that can execute shell commands." alt="" coords="543,328,724,349"/>
+<area shape="rect" id="node15" href="api.html#agents_for_all.tools.web_fetcher.WebFetcher" target="_top" title="A tool that fetches the content of a web page." alt="" coords="505,369,762,389"/>
+<area shape="rect" id="node16" href="api.html#agents_for_all.tools.web_search.WebSearch" target="_top" title="A tool that performs a web search using Google or Bing API." alt="" coords="508,409,759,430"/>
+</map>
