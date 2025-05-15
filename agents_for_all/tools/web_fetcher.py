@@ -9,10 +9,7 @@ class WebFetcher(Tool):
     """
     A tool that fetches the content of a web page.
 
-    Accepts a URL and returns the first 2000 characters of its response body.
-
-    Example:
-        {"url": "https://example.com"}
+    Accepts a URL and returns the of its response body.
     """
 
     @property

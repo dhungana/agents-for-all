@@ -10,12 +10,6 @@ class Shell(Tool):
     A tool that can execute shell commands.
 
     Accepts input via input JSON and runs the command on the host shell.
-
-    Example:
-        {"command": "ls -l"}
-
-    Note:
-        Use with caution. No output redirection or piping is allowed.
     """
 
     @property

@@ -11,8 +11,6 @@ class WebSearch(Tool):
 
     Requires API keys during initialization.
 
-    Example input:
-        {"query": "weather in Kathmandu"}
     """
 
     def __init__(self, provider: Literal["google", "bing"], api_key: str, cx: str = ""):

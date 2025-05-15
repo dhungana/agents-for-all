@@ -11,8 +11,6 @@ class Math(Tool):
 
     Accepts an expression string and optional variables to substitute.
 
-    Example:
-        {"expr": "2*x + 1", "x": 5}
     """
 
     @property

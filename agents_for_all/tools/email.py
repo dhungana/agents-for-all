@@ -10,13 +10,6 @@ class Email(Tool):
     A tool that sends emails via SMTP.
 
     Requires SMTP host, port, and login credentials during initialization.
-
-    Example input:
-        {
-            "to": "recipient@example.com",
-            "subject": "Hello",
-            "body": "This is a test."
-        }
     """
 
     def __init__(self, smtp_host: str, smtp_port: int, username: str, password: str):

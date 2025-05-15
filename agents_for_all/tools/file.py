@@ -9,10 +9,6 @@ class File(Tool):
 
     Accepts input via input JSON to read from or write to a file.
 
-    Examples:
-        {"operation": "read", "path": "foo.txt"}
-        {"operation": "write", "path": "bar.txt", "content": "Hello world"}
-
     """
 
     @property
