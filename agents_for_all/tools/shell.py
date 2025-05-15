@@ -1,3 +1,4 @@
+import platform
 import subprocess
 from typing import Dict
 
@@ -31,18 +32,27 @@ class Shell(Tool):
         {"command": "<your shell command>"}
         """
         return (
-            'Executes shell commands. Input: {"command": "<your shell command>"}. '
-            "Only stdout is returned. Errors are suppressed or printed as text."
+            """
+            Executes shell commands. Input: {"command": "<your shell command>"}}.
+            Only stdout is returned. Errors are suppressed or printed as text.
+            Base the command on the Platform i.e. use cmd or powershell for windows, bash for linux.
+            The platform is: """
+            + platform.system()
         )
 
     def execute(self, input_json: Dict) -> str:
         command = input_json.get("command")
         if not command:
-            return "Error: 'command' key missing from input_json."
+            raise ValueError("Error: 'command' key missing from input_json.")
         try:
             result = subprocess.run(
-                command, shell=True, capture_output=True, text=True, check=False
+                command,
+                shell=True,
+                capture_output=True,
+                text=True,
+                check=False,
+                timeout=10,
             )
             return result.stdout.strip()
         except Exception as e:
-            return f"Shell error: {str(e)}"
+            raise ValueError(f"Shell error: {str(e)}")

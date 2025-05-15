@@ -25,15 +25,12 @@ class Python(Tool):
         """
         Explains that this tool executes raw Python code.
         """
-        return (
-            "A tool which can execute python commands commands on the host. "
-            "It can generate values or produce side effects (e.g., creating files, etc). "
-            'Provide the command to execute as: {"code": "<your python command>"}'
-            'All the imports should be in the value for "code"'
-            "Be careful of indentations and possible errors"
-            "The only thing this tool can handle is actual code. The LLM shouldn't output anything else."
-            "This means no explanation. This means no code inside ```python```. Just pure python code to execute."
-        )
+        return """
+            "A tool which can execute python commands commands on the host."
+            'Input format: {"code": "<your python command>"}'
+            'Use print() to output the result and do not output extraneous details'
+            'Do not use input() or anything that will make the execution stop'
+        """
 
     def execute(self, input_json: Dict) -> str:
         """
@@ -45,7 +42,7 @@ class Python(Tool):
         Returns:
             str: The output or error string from the execution.
         """
-        command = input_json.get("code")
+        command = input_json.get("code").replace("```python\n", "").replace("```\n", "")
         if not command:
             return "Error: 'code' key missing from input_json."
 

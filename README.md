@@ -36,7 +36,7 @@ from agents_for_all.tools.python import Python
 
 llm = DirectModel(
   api_endpoint="http://localhost:1234/v1/chat/completions",
-  model="deepseek-r1-distill-llama-8b"
+  model="deepseek-r1-distill-qwen-14b"
 )
 agent = Agent(llm=llm, tools=[Python()])
 result = agent.do("Generate a Fibonacci sequence of length 10.")
@@ -67,7 +67,7 @@ print(result.history) # History of steps taken
 Create a virtual environment and install dependencies:
 
 ```bash
-uv sync
+uv sync --extra dev
 ```
 
 ## 🧪 Running Tests

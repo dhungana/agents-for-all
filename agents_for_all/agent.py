@@ -9,39 +9,124 @@ from agents_for_all.tools.base_tool import Tool
 
 logging.basicConfig(level=logging.WARNING)
 
-DEFAULT_SUBDIVISION_PROMPT = """
-You are a task-planning AI. Give a JSON array preferring tools over llm given the following user request:
+# flake8: noqa
+SUBDIVISION_PROMPT = """
+<SUBDIVISION_PROMPT>
+You are a task-planning AI. Your job is to break down the user's request into a list of structured steps that use tools and LLMs.
 
+User request:
+<action>
 {action}
+</action>
 
-And a list of available tools described below:
+Below is a list of available tools:
 
+<tool_descriptions>
 {tool_descriptions}
+</tool_descriptions>
 
-Break the task into steps. For each step, specify:
-- "type": "tool" or "llm"
-- "name": name of the tool (if type is tool)
-- "input_json": dictionary input for the tool (if type is tool)
-- "query": string to send to LLM (if type is llm)
+Each step must be a dictionary with:
+- "type": either "tool" or "llm"
+- "name": name of the tool (if type is "tool")
+- "input_json": (if type is "tool")
+    - A dictionary of inputs, if the input is already available based on the tool's description. Be careful to use the keys in the tool's description.
+    - Or null, if the input must be dynamically generated from a previous step. Be sure to say null and not None.
+- "query": a string to send to the LLM (if type is "llm")
+
+---
+
+When one tool's output is needed as input for another tool:
+- Insert an **LLM step in between** to format the output properly.
+- For the dependent tool, set `"input_json": null`. This is the dependent tool which comes after not the one in front.
+- In the LLM step, set the `"query"` to explain that it must convert the previous tool's output into a valid JSON input for the next tool, based on that tool's description.
+
+Example LLM query in this case:
+"Format the previous tool's output as valid input for Tool B. Tool B expects: {{...input format from Tool B's description...}}. Fill the content verbatim as needed."
+Be very careful about the json format that is needed by the tool. Do not include any extra keys than the ones in Tool B's description.
+[
+  {{"type": "tool", "name": "WebFetcher", "input_json": {{"url": "https://google.com"}}}},
+  {{"type": "llm", "query": "Replace the <content> from previous execution and return a json string by filling the content verbatim without code tags and proper escaping: {{"code": "print(len(<content>))"}}."}}
+  {{"type": "tool", "name": "Python": null}}
+]
+
+Important:
+- The LLM must return the exact JSON dictionary needed.
+- Use inputs from previous tool verbatim with no changes.
+- Do not use variables, placeholders, or explanation.
+- Just return the structured JSON to be used as `input_json` for the next tool. Be very careful about the format of the input_json in the tool's description.
+
+---
 
 Respond only with a JSON array like:
 [
-  {{"type": "tool", "name": "Computer", "input_json": {{"code": "echo hello"}}}},
+  {{"type": "tool", "name": "Python", "input_json": {{"code": "print("hello")"}}}},
   {{"type": "llm", "query": "Summarize what was just done."}}
 ]
 
-Do not respond with anything other than the JSON array. No need for explanation or anything.
-Do not explain the steps or say anything in the beginning. No need to tag the json with ```json.
-Just give the JSON array as told.
+Do not return anything else — no markdown, no code tags, no explanations. Only the JSON array.
+</SUBDIVISION_PROMPT>
 """
 
 ERROR_CORRECTION_PROMPT = """
+<ERROR_CORRECTION_PROMPT>
 Last time, with these steps we got an error.
 
 Steps:
+<steps>
 {steps}
+</steps>
 
+Error:
+<error>
 {error}
+</error>
+<ERROR_CORRECTION_PROMPT>
+"""
+
+# flake8: noqa
+LLM_STEP_PROMPT = """
+<LLM_STEP_PROMPT>
+User asked for this action:
+<action>
+{action}
+</action>
+
+Steps to solve the task:
+<steps>
+{steps}
+</steps>
+
+So far this has happened:
+<history>
+{history}
+</history>
+
+Now answer this query:
+<query>
+{query}
+</query>
+
+If the content from last step is:
+<content>
+{content}
+</content>
+
+If the content is present, use it verbatim in the format required in the query to perform the action required using the next tool's input_json format.
+</LLM_STEP_PROMPT>
+"""
+
+SUMMARY_PROMPT = """
+Give the answer in brief, based on the action and what happened. Avoid repeating full history.
+
+Action:
+<action>
+{action}
+</action>
+
+History:
+<history>
+{history}
+</history>
 """
 
 
@@ -73,7 +158,7 @@ class Agent:
 
         llm = DirectModel(
             api_endpoint="http://127.0.0.1:1234/v1/chat/completions",
-            model="deepseek-r1-distill-llama-8b"
+            model="deepseek-r1-distill-qwen-14b"
         )
         python = Python()
 
@@ -89,32 +174,47 @@ class Agent:
         self.tools = {tool.name: tool for tool in tools}
         self.max_retries = max_retries
 
-    def _force_json_response(self, llm_response: str):
+    def _force_json_array(self, llm_response: str):
+        llm_response = llm_response.replace("```json\n", "").replace("```", "").strip()
         try:
             return json.loads(llm_response)
-        except json.JSONDecodeError:
-            # Try to extract JSON if it was wrapped in text
+        except Exception:
             match = re.search(r"\[.*\]", llm_response, re.DOTALL)
             if match:
-                return json.loads(match.group())
-            raise
+                try:
+                    return json.loads(match.group())
+                except Exception:
+                    raise ValueError(f"Invalid json: {llm_response}")
+
+    def _force_json(self, llm_response: str):
+        llm_response = llm_response.replace("```json\n", "").replace("```", "").strip()
+        try:
+            return json.loads(llm_response)
+        except Exception:
+            match = re.search(r"\{.*\}", llm_response, re.DOTALL)
+            if match:
+                try:
+                    return json.loads(match.group())
+                except Exception:
+                    raise ValueError(f"Invalid json: {llm_response}")
 
     def _subdivide_task(
         self, action: str, error: str = "", steps: Dict | None = None
     ) -> List[Dict[str, Any]]:
-        tool_descriptions = "\n".join(
-            [f"- {tool.name}: {tool.description}" for tool in self.tools.values()]
+        tool_descriptions = "\n\n\n".join(
+            [f"{tool.name}: {tool.description}" for tool in self.tools.values()]
         )
-        prompt = DEFAULT_SUBDIVISION_PROMPT.format(
-            action=action, tool_descriptions=tool_descriptions, error=error
+        subdivision_prompt = SUBDIVISION_PROMPT.format(
+            action=action,
+            tool_descriptions=tool_descriptions,
         )
-        prompt += (
+        subdivision_prompt += (
             ERROR_CORRECTION_PROMPT.format(steps=steps, error=error) if error else ""
         )
-        response = self.llm.get_response(prompt)
-        return self._force_json_response(response)
+        response = self.llm.get_response(subdivision_prompt)
+        return self._force_json_array(response)
 
-    def do(self, action: str) -> str:
+    def do(self, action: str) -> AgentResult:
         """
         Do the given action using tools available and the llm specified.
 
@@ -122,96 +222,72 @@ class Agent:
             action (str): The action to perform.
 
         Returns:
-            str: The output from doing the action or a brief summary of what happened by performing the action.
+            AgentResult: Final answer and execution trace.
         """
 
         attempt = 0
         steps = []
         error = ""
+
         while attempt < self.max_retries:
             try:
                 steps = self._subdivide_task(action=action, steps=steps, error=error)
-                results = []
+                logging.info(f"Steps: {steps}")
                 history = []
+                content = ""  # output of previous step
 
                 for idx, step in enumerate(steps):
                     step_type = step.get("type")
 
                     if step_type == "tool":
                         name = step.get("name")
-                        input_json = step.get("input_json")
+                        input_json = step.get("input_json") or self._force_json(content)
                         tool = self.tools.get(name)
+
                         if not tool:
-                            message = f"Tool '{name}' not found."
-                            logging.error(message)
-                            results.append(message)
-                            history.append(message)
-                            continue
+                            msg = f"[{idx+1}] Tool '{name}' not found."
+                            logging.error(msg)
+                            history.append(msg)
+                            raise ValueError(msg)
 
                         logging.info(
-                            f"[Step {idx+1}] Tool: {name} | Input: {input_json}"
+                            f"[Step {idx+1}] Tool `{name}` Input: {input_json}"
                         )
                         result = tool.execute(input_json)
-                        logging.info(f"[Tool:{name}] Result: {result}")
-                        results.append(result)
-                        history.append(
-                            f"Tool `{name}` executed with input {input_json} produced: {result}"
-                        )
+                        logging.info(f"[Tool:{name}] Output: {result}")
+                        history.append(f"[{idx+1}] Tool `{name}` Output: {result}")
+                        content = result
 
                     elif step_type == "llm":
-                        llm_query = step.get("query")
-                        history_str = "\n".join(history)
-                        full_prompt = f"""
-Give the answer for the {llm_query} based on the following.
-
-The user asked for the action
-
-{action}
-
-We subdivided the action based to these steps:
-
-{steps}
-
-Here is what has happened so far in the execution:
-
-{history_str}
-
-Use values from history when possible.
-"""
-                        logging.info(f"[Step {idx+1}] LLM Query: {llm_query}")
-                        response = self.llm.get_response(full_prompt.strip())
+                        query = step.get("query")
+                        prompt = LLM_STEP_PROMPT.format(
+                            action=action,
+                            steps=json.dumps(steps, indent=2),
+                            history="\n".join(history),
+                            query=query,
+                            content=content,
+                        )
+                        logging.info(f"[Step {idx+1}] LLM Prompt: {prompt}")
+                        response = self.llm.get_response(prompt.strip())
                         logging.info(f"[LLM] Response: {response}")
-                        results.append(response)
-                        history.append(f"LLM responded with: {response}")
+                        history.append(f"[{idx+1}] LLM Output: {response}")
+                        content = response
 
                     else:
-                        msg = f"Unknown step type: {step_type}"
+                        msg = f"[{idx+1}] Unknown step type: '{step_type}'"
                         logging.error(msg)
-                        results.append(msg)
                         history.append(msg)
-                history_str = "\n".join(history)
-                summary_prompt = f"""
-Give the answer without giving the full history. Just answer based on the action in brief.
-Give the desired answer only or tell whether the desired outcome happened or not.
+                        raise ValueError(msg)
 
-The user asked for the action
-
-{action}
-
-We subdivided the action based to these steps:
-
-{steps}
-
-Here is what has happened so far in the execution:
-
-{history_str}
-
-Now, Give the final answer in brief based on the action desired without going into detail of the history.
-"""
-                final_result = self.llm.get_response(summary_prompt.strip())
+                final_prompt = SUMMARY_PROMPT.format(
+                    action=action, history="\n".join(history)
+                )
+                final_result = self.llm.get_response(final_prompt.strip())
                 logging.info(f"[Final Summary] {final_result}")
+
                 return AgentResult(output=final_result, history=history)
+
             except Exception as e:
                 attempt += 1
-                error = e
+                error = str(e)
                 logging.warning(f"Retry {attempt} due to error: {e}")

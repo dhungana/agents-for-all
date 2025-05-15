@@ -30,10 +30,11 @@ class WebFetcher(Tool):
         Input format:
         {"url": "<https-url>"}
         """
-        return (
+        return """
             "Fetches the HTML/text content of a given URL. "
-            "Returns the first 2000 characters to avoid overload."
-        )
+            Input format:
+            {"url": "<https-url>"}
+        """
 
     def execute(self, input_json: Dict) -> str:
         url = input_json.get("url")
@@ -41,6 +42,6 @@ class WebFetcher(Tool):
             return "Error: 'url' key missing from input_json."
         try:
             response = requests.get(url)
-            return response.text[:2000]
+            return response.text
         except Exception as e:
             return f"Web error: {str(e)}"
